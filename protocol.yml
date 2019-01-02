@@ -1,0 +1,717 @@
+---
+
+# This file is generated via a process internal to LIFX
+# It is a yaml file with three top level sections: enums, fields and packets
+#
+# Enums are mappings of integers to names
+# They are of the type:
+# enums:
+#   <name>:
+#     type: <type>
+#     values:
+#       - name: <name>
+#         value: <integer>
+#       - ...
+#
+# Fields are names given to some group of fields. They are of the form of
+# fields:
+#   <name>:
+#     size_bytes: <size in bytes>
+#     fields:
+#       - name: <name>
+#         type: "<type>"
+#         size_bytes: <size in bytes>
+#       - ...
+#
+# Note that type of "reserved" is a special type that has no name.
+#
+# Packets are the payloads for the different packet types that LIFX devices
+# understand. They are of the form:
+# packets:
+#   <name>:
+#     pkt_type: <integer>
+#     size_bytes: <size in bytes>
+#     fields:
+#       - name: <name>
+#         type: "<type>"
+#         size_bytes: <size in bytes>
+#       - ...
+#
+# See https://lan.developer.lifx.com/docs/header-description for more inforamtion
+# about constructing packets
+#
+# For both fields and packets, if the type is something like "<DeviceService>",
+# i.e. a name in angle brackets, then that is referring to another enum/fields/packets
+# So if it's an enum, then that value is the type of the enum being referred to
+# And the valid values are those found in the enum.
+# If the name is for a fields, then it means the fields in that object appear at
+# that place.
+# if the name is for another packet, then it means the fields in that packet appear
+# in that place.
+
+enums:
+  DeviceService:
+    type: uint8
+    values:
+      - name: "DEVICE_SERVICE_UDP"
+        value: 1
+      - name: reserved
+        value: 2
+      - name: reserved
+        value: 3
+      - name: reserved
+        value: 4
+      - name: reserved
+        value: 5
+
+  LightWaveform:
+    type: uint8
+    values:
+      - name: "LIGHT_WAVEFORM_SAW"
+        value: 0
+      - name: "LIGHT_WAVEFORM_SINE"
+        value: 1
+      - name: "LIGHT_WAVEFORM_HALF_SINE"
+        value: 2
+      - name: "LIGHT_WAVEFORM_TRIANGLE"
+        value: 3
+      - name: "LIGHT_WAVEFORM_PULSE"
+        value: 4
+
+  MultiZoneApplicationRequest:
+    type: uint8
+    values:
+      - name: "MULTI_ZONE_APPLICATION_REQUEST_NO_APPLY"
+        value: 0
+      - name: "MULTI_ZONE_APPLICATION_REQUEST_APPLY"
+        value: 1
+      - name: "MULTI_ZONE_APPLICATION_REQUEST_APPLY_ONLY"
+        value: 2
+
+fields:
+  LightHsbk:
+    size_bytes: 8
+    fields:
+      - name: "Hue"
+        type: "uint16"
+        size_bytes: 2
+      - name: "Saturation"
+        type: "uint16"
+        size_bytes: 2
+      - name: "Brightness"
+        type: "uint16"
+        size_bytes: 2
+      - name: "Kelvin"
+        type: "uint16"
+        size_bytes: 2
+
+  TileAccelMeas:
+    size_bytes: 6
+    fields:
+      - name: "X"
+        type: "int16"
+        size_bytes: 2
+      - name: "Y"
+        type: "int16"
+        size_bytes: 2
+      - name: "Z"
+        type: "int16"
+        size_bytes: 2
+
+  TileStateDevice:
+    size_bytes: 55
+    fields:
+      - name: "AccelMeas"
+        type: "<TileAccelMeas>"
+        size_bytes: 6
+      - type: reserved
+        size_bytes: 2
+      - name: "UserX"
+        type: "float32"
+        size_bytes: 4
+      - name: "UserY"
+        type: "float32"
+        size_bytes: 4
+      - name: "Width"
+        type: "uint8"
+        size_bytes: 1
+      - name: "Height"
+        type: "uint8"
+        size_bytes: 1
+      - type: reserved
+        size_bytes: 1
+      - name: "DeviceVersion"
+        type: "<DeviceStateVersion>"
+        size_bytes: 12
+      - name: "Firmware"
+        type: "<DeviceStateHostFirmware>"
+        size_bytes: 20
+      - type: reserved
+        size_bytes: 4
+
+  TileBufferRect:
+    size_bytes: 4
+    fields:
+      - type: reserved
+        size_bytes: 1
+      - name: "X"
+        type: "uint8"
+        size_bytes: 1
+      - name: "Y"
+        type: "uint8"
+        size_bytes: 1
+      - name: "Width"
+        type: "uint8"
+        size_bytes: 1
+
+packets:
+  device:
+    DeviceGetService:
+      pkt_type: 2
+      size_bytes: 0
+      fields: []
+
+    DeviceStateService:
+      pkt_type: 3
+      size_bytes: 5
+      fields:
+        - name: "Service"
+          type: "<DeviceService>"
+          size_bytes: 1
+        - name: "Port"
+          type: "uint32"
+          size_bytes: 4
+
+    DeviceGetHostInfo:
+      pkt_type: 12
+      size_bytes: 0
+      fields: []
+
+    DeviceStateHostInfo:
+      pkt_type: 13
+      size_bytes: 14
+      fields:
+        - name: "Signal"
+          type: "float32"
+          size_bytes: 4
+        - name: "Tx"
+          type: "uint32"
+          size_bytes: 4
+        - name: "Rx"
+          type: "uint32"
+          size_bytes: 4
+        - type: reserved
+          size_bytes: 2
+
+    DeviceGetHostFirmware:
+      pkt_type: 14
+      size_bytes: 0
+      fields: []
+
+    DeviceStateHostFirmware:
+      pkt_type: 15
+      size_bytes: 20
+      fields:
+        - name: "Build"
+          type: "uint64"
+          size_bytes: 8
+        - type: reserved
+          size_bytes: 8
+        - name: "Version"
+          type: "uint32"
+          size_bytes: 4
+
+    DeviceGetWifiInfo:
+      pkt_type: 16
+      size_bytes: 0
+      fields: []
+
+    DeviceStateWifiInfo:
+      pkt_type: 17
+      size_bytes: 14
+      fields:
+        - name: "Signal"
+          type: "float32"
+          size_bytes: 4
+        - name: "Tx"
+          type: "uint32"
+          size_bytes: 4
+        - name: "Rx"
+          type: "uint32"
+          size_bytes: 4
+        - type: reserved
+          size_bytes: 2
+
+    DeviceGetWifiFirmware:
+      pkt_type: 18
+      size_bytes: 0
+      fields: []
+
+    DeviceStateWifiFirmware:
+      pkt_type: 19
+      size_bytes: 20
+      fields:
+        - name: "Build"
+          type: "uint64"
+          size_bytes: 8
+        - type: reserved
+          size_bytes: 8
+        - name: "Version"
+          type: "uint32"
+          size_bytes: 4
+
+    DeviceGetPower:
+      pkt_type: 20
+      size_bytes: 0
+      fields: []
+
+    DeviceSetPower:
+      pkt_type: 21
+      size_bytes: 2
+      fields:
+        - name: "Level"
+          type: "uint16"
+          size_bytes: 2
+
+    DeviceStatePower:
+      pkt_type: 22
+      size_bytes: 2
+      fields:
+        - name: "Level"
+          type: "uint16"
+          size_bytes: 2
+
+    DeviceGetLabel:
+      pkt_type: 23
+      size_bytes: 0
+      fields: []
+
+    DeviceSetLabel:
+      pkt_type: 24
+      size_bytes: 32
+      fields:
+        - name: "Label"
+          type: "[32]byte"
+          size_bytes: 32
+
+    DeviceStateLabel:
+      pkt_type: 25
+      size_bytes: 32
+      fields:
+        - name: "Label"
+          type: "[32]byte"
+          size_bytes: 32
+
+    DeviceGetVersion:
+      pkt_type: 32
+      size_bytes: 0
+      fields: []
+
+    DeviceStateVersion:
+      pkt_type: 33
+      size_bytes: 12
+      fields:
+        - name: "Vendor"
+          type: "uint32"
+          size_bytes: 4
+        - name: "Product"
+          type: "uint32"
+          size_bytes: 4
+        - name: "Version"
+          type: "uint32"
+          size_bytes: 4
+
+    DeviceGetInfo:
+      pkt_type: 34
+      size_bytes: 0
+      fields: []
+
+    DeviceStateInfo:
+      pkt_type: 35
+      size_bytes: 24
+      fields:
+        - name: "Time"
+          type: "uint64"
+          size_bytes: 8
+        - name: "Uptime"
+          type: "uint64"
+          size_bytes: 8
+        - name: "Downtime"
+          type: "uint64"
+          size_bytes: 8
+
+    DeviceAcknowledgement:
+      pkt_type: 45
+      size_bytes: 0
+      fields: []
+
+    DeviceGetLocation:
+      pkt_type: 48
+      size_bytes: 0
+      fields: []
+
+    DeviceSetLocation:
+      pkt_type: 49
+      size_bytes: 56
+      fields:
+        - name: "Location"
+          type: "[16]byte"
+          size_bytes: 16
+        - name: "Label"
+          type: "[32]byte"
+          size_bytes: 32
+        - name: "UpdatedAt"
+          type: "uint64"
+          size_bytes: 8
+
+    DeviceStateLocation:
+      pkt_type: 50
+      size_bytes: 56
+      fields:
+        - name: "Location"
+          type: "[16]byte"
+          size_bytes: 16
+        - name: "Label"
+          type: "[32]byte"
+          size_bytes: 32
+        - name: "UpdatedAt"
+          type: "uint64"
+          size_bytes: 8
+
+    DeviceGetGroup:
+      pkt_type: 51
+      size_bytes: 0
+      fields: []
+
+    DeviceSetGroup:
+      pkt_type: 52
+      size_bytes: 56
+      fields:
+        - name: "Group"
+          type: "[16]byte"
+          size_bytes: 16
+        - name: "Label"
+          type: "[32]byte"
+          size_bytes: 32
+        - name: "UpdatedAt"
+          type: "uint64"
+          size_bytes: 8
+
+    DeviceStateGroup:
+      pkt_type: 53
+      size_bytes: 56
+      fields:
+        - name: "Group"
+          type: "[16]byte"
+          size_bytes: 16
+        - name: "Label"
+          type: "[32]byte"
+          size_bytes: 32
+        - name: "UpdatedAt"
+          type: "uint64"
+          size_bytes: 8
+
+    DeviceEchoRequest:
+      pkt_type: 58
+      size_bytes: 64
+      fields:
+        - name: "Payload"
+          type: "[64]byte"
+          size_bytes: 64
+
+    DeviceEchoResponse:
+      pkt_type: 59
+      size_bytes: 64
+      fields:
+        - name: "Payload"
+          type: "[64]byte"
+          size_bytes: 64
+
+  light:
+    LightGet:
+      pkt_type: 101
+      size_bytes: 0
+      fields: []
+
+    LightSetColor:
+      pkt_type: 102
+      size_bytes: 13
+      fields:
+        - type: reserved
+          size_bytes: 1
+        - name: "Color"
+          type: "<LightHsbk>"
+          size_bytes: 8
+        - name: "Duration"
+          type: "uint32"
+          size_bytes: 4
+
+    LightSetWaveformOptional:
+      pkt_type: 119
+      size_bytes: 25
+      fields:
+        - type: reserved
+          size_bytes: 1
+        - name: "Transient"
+          type: "bool"
+          size_bytes: 1
+        - name: "Color"
+          type: "<LightHsbk>"
+          size_bytes: 8
+        - name: "Period"
+          type: "uint32"
+          size_bytes: 4
+        - name: "Cycles"
+          type: "float32"
+          size_bytes: 4
+        - name: "SkewRatio"
+          type: "int16"
+          size_bytes: 2
+        - name: "Waveform"
+          type: "<LightWaveform>"
+          size_bytes: 1
+        - name: "SetHue"
+          type: "bool"
+          size_bytes: 1
+        - name: "SetSaturation"
+          type: "bool"
+          size_bytes: 1
+        - name: "SetBrightness"
+          type: "bool"
+          size_bytes: 1
+        - name: "SetKelvin"
+          type: "bool"
+          size_bytes: 1
+
+    LightSetWaveform:
+      pkt_type: 103
+      size_bytes: 21
+      fields:
+        - type: reserved
+          size_bytes: 1
+        - name: "Transient"
+          type: "bool"
+          size_bytes: 1
+        - name: "Color"
+          type: "<LightHsbk>"
+          size_bytes: 8
+        - name: "Period"
+          type: "uint32"
+          size_bytes: 4
+        - name: "Cycles"
+          type: "float32"
+          size_bytes: 4
+        - name: "SkewRatio"
+          type: "int16"
+          size_bytes: 2
+        - name: "Waveform"
+          type: "<LightWaveform>"
+          size_bytes: 1
+
+    LightGetPower:
+      pkt_type: 116
+      size_bytes: 0
+      fields: []
+
+    LightSetPower:
+      pkt_type: 117
+      size_bytes: 6
+      fields:
+        - name: "Level"
+          type: "uint16"
+          size_bytes: 2
+        - name: "Duration"
+          type: "uint32"
+          size_bytes: 4
+
+    LightStatePower:
+      pkt_type: 118
+      size_bytes: 2
+      fields:
+        - name: "Level"
+          type: "uint16"
+          size_bytes: 2
+
+    LightState:
+      pkt_type: 107
+      size_bytes: 52
+      fields:
+        - name: "Color"
+          type: "<LightHsbk>"
+          size_bytes: 8
+        - type: reserved
+          size_bytes: 2
+        - name: "Power"
+          type: "uint16"
+          size_bytes: 2
+        - name: "Label"
+          type: "[32]byte"
+          size_bytes: 32
+        - type: reserved
+          size_bytes: 8
+
+    LightGetInfrared:
+      pkt_type: 120
+      size_bytes: 0
+      fields: []
+
+    LightStateInfrared:
+      pkt_type: 121
+      size_bytes: 2
+      fields:
+        - name: "Brightness"
+          type: "uint16"
+          size_bytes: 2
+
+    LightSetInfrared:
+      pkt_type: 122
+      size_bytes: 2
+      fields:
+        - name: "Brightness"
+          type: "uint16"
+          size_bytes: 2
+
+  multi_zone:
+    MultiZoneSetColorZones:
+      pkt_type: 501
+      size_bytes: 15
+      fields:
+        - name: "StartIndex"
+          type: "uint8"
+          size_bytes: 1
+        - name: "EndIndex"
+          type: "uint8"
+          size_bytes: 1
+        - name: "Color"
+          type: "<LightHsbk>"
+          size_bytes: 8
+        - name: "Duration"
+          type: "uint32"
+          size_bytes: 4
+        - name: "Apply"
+          type: "<MultiZoneApplicationRequest>"
+          size_bytes: 1
+
+    MultiZoneGetColorZones:
+      pkt_type: 502
+      size_bytes: 2
+      fields:
+        - name: "StartIndex"
+          type: "uint8"
+          size_bytes: 1
+        - name: "EndIndex"
+          type: "uint8"
+          size_bytes: 1
+
+    MultiZoneStateZone:
+      pkt_type: 503
+      size_bytes: 10
+      fields:
+        - name: "Count"
+          type: "uint8"
+          size_bytes: 1
+        - name: "Index"
+          type: "uint8"
+          size_bytes: 1
+        - name: "Color"
+          type: "<LightHsbk>"
+          size_bytes: 8
+
+    MultiZoneStateMultiZone:
+      pkt_type: 506
+      size_bytes: 66
+      fields:
+        - name: "Count"
+          type: "uint8"
+          size_bytes: 1
+        - name: "Index"
+          type: "uint8"
+          size_bytes: 1
+        - name: "Color"
+          type: "[8]<LightHsbk>"
+          size_bytes: 64
+
+  tile:
+    TileGetDeviceChain:
+      pkt_type: 701
+      size_bytes: 0
+      fields: []
+
+    TileStateDeviceChain:
+      pkt_type: 702
+      size_bytes: 882
+      fields:
+        - name: "StartIndex"
+          type: "uint8"
+          size_bytes: 1
+        - name: "TileDevices"
+          type: "[16]<TileStateDevice>"
+          size_bytes: 880
+        - name: "TotalCount"
+          type: "uint8"
+          size_bytes: 1
+
+    TileSetUserPosition:
+      pkt_type: 703
+      size_bytes: 11
+      fields:
+        - name: "TileIndex"
+          type: "uint8"
+          size_bytes: 1
+        - type: reserved
+          size_bytes: 2
+        - name: "UserX"
+          type: "float32"
+          size_bytes: 4
+        - name: "UserY"
+          type: "float32"
+          size_bytes: 4
+
+    TileGetState64:
+      pkt_type: 707
+      size_bytes: 6
+      fields:
+        - name: "TileIndex"
+          type: "uint8"
+          size_bytes: 1
+        - name: "Length"
+          type: "uint8"
+          size_bytes: 1
+        - name: "Rect"
+          type: "<TileBufferRect>"
+          size_bytes: 4
+
+    TileState64:
+      pkt_type: 711
+      size_bytes: 517
+      fields:
+        - name: "TileIndex"
+          type: "uint8"
+          size_bytes: 1
+        - name: "Rect"
+          type: "<TileBufferRect>"
+          size_bytes: 4
+        - name: "Colors"
+          type: "[64]<LightHsbk>"
+          size_bytes: 512
+
+    TileSetState64:
+      pkt_type: 715
+      size_bytes: 522
+      fields:
+        - name: "TileIndex"
+          type: "uint8"
+          size_bytes: 1
+        - name: "Length"
+          type: "uint8"
+          size_bytes: 1
+        - name: "Rect"
+          type: "<TileBufferRect>"
+          size_bytes: 4
+        - name: "Duration"
+          type: "uint32"
+          size_bytes: 4
+        - name: "Colors"
+          type: "[64]<LightHsbk>"
+          size_bytes: 512
+
