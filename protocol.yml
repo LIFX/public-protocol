@@ -88,6 +88,18 @@ enums:
       - name: "MULTI_ZONE_APPLICATION_REQUEST_APPLY_ONLY"
         value: 2
 
+  MultiZoneEffectType:
+    type: uint8
+    values:
+      - name: "MULTI_ZONE_EFFECT_TYPE_OFF"
+        value: 0
+      - name: "MULTI_ZONE_EFFECT_TYPE_MOVE"
+        value: 1
+      - name: reserved
+        value: 2
+      - name: reserved
+        value: 3
+
   MultiZoneExtendedApplicationRequest:
     type: uint8
     values:
@@ -97,6 +109,20 @@ enums:
         value: 1
       - name: "MULTI_ZONE_EXTENDED_APPLICATION_REQUEST_APPLY_ONLY"
         value: 2
+
+  TileEffectType:
+    type: uint8
+    values:
+      - name: "TILE_EFFECT_TYPE_OFF"
+        value: 0
+      - name: reserved
+        value: 1
+      - name: "TILE_EFFECT_TYPE_MORPH"
+        value: 2
+      - name: "TILE_EFFECT_TYPE_FLAME"
+        value: 3
+      - name: reserved
+        value: 4
 
 fields:
   LightHsbk:
@@ -114,6 +140,59 @@ fields:
       - name: "Kelvin"
         type: "uint16"
         size_bytes: 2
+
+  MultiZoneEffectParameter:
+    size_bytes: 32
+    fields:
+      - name: "Parameter0"
+        type: "uint32"
+        size_bytes: 4
+      - name: "Parameter1"
+        type: "uint32"
+        size_bytes: 4
+      - name: "Parameter2"
+        type: "uint32"
+        size_bytes: 4
+      - name: "Parameter3"
+        type: "uint32"
+        size_bytes: 4
+      - name: "Parameter4"
+        type: "uint32"
+        size_bytes: 4
+      - name: "Parameter5"
+        type: "uint32"
+        size_bytes: 4
+      - name: "Parameter6"
+        type: "uint32"
+        size_bytes: 4
+      - name: "Parameter7"
+        type: "uint32"
+        size_bytes: 4
+
+  MultiZoneEffectSettings:
+    size_bytes: 59
+    fields:
+      - name: "Instanceid"
+        type: "uint32"
+        size_bytes: 4
+      - name: "Type"
+        type: "<MultiZoneEffectType>"
+        size_bytes: 1
+      - type: reserved
+        size_bytes: 2
+      - name: "Speed"
+        type: "uint32"
+        size_bytes: 4
+      - name: "Duration"
+        type: "uint64"
+        size_bytes: 8
+      - type: reserved
+        size_bytes: 4
+      - type: reserved
+        size_bytes: 4
+      - name: "Parameter"
+        type: "<MultiZoneEffectParameter>"
+        size_bytes: 32
 
   TileAccelMeas:
     size_bytes: 6
@@ -173,6 +252,65 @@ fields:
       - name: "Width"
         type: "uint8"
         size_bytes: 1
+
+  TileEffectParameter:
+    size_bytes: 32
+    fields:
+      - name: "Parameter0"
+        type: "uint32"
+        size_bytes: 4
+      - name: "Parameter1"
+        type: "uint32"
+        size_bytes: 4
+      - name: "Parameter2"
+        type: "uint32"
+        size_bytes: 4
+      - name: "Parameter3"
+        type: "uint32"
+        size_bytes: 4
+      - name: "Parameter4"
+        type: "uint32"
+        size_bytes: 4
+      - name: "Parameter5"
+        type: "uint32"
+        size_bytes: 4
+      - name: "Parameter6"
+        type: "uint32"
+        size_bytes: 4
+      - name: "Parameter7"
+        type: "uint32"
+        size_bytes: 4
+
+  TileEffectSettings:
+    size_bytes: 186
+    fields:
+      - name: "Instanceid"
+        type: "uint32"
+        size_bytes: 4
+      - name: "Type"
+        type: "<TileEffectType>"
+        size_bytes: 1
+      - name: "Speed"
+        type: "uint32"
+        size_bytes: 4
+      - name: "Duration"
+        type: "uint64"
+        size_bytes: 8
+      - name: "Reserved0"
+        type: "uint32"
+        size_bytes: 4
+      - name: "Reserved1"
+        type: "uint32"
+        size_bytes: 4
+      - name: "Parameter"
+        type: "<TileEffectParameter>"
+        size_bytes: 32
+      - name: "PaletteCount"
+        type: "uint8"
+        size_bytes: 1
+      - name: "Palette"
+        type: "[16]<LightHsbk>"
+        size_bytes: 128
 
 packets:
   device:
@@ -641,6 +779,27 @@ packets:
           type: "[8]<LightHsbk>"
           size_bytes: 64
 
+    MultiZoneGetEffect:
+      pkt_type: 507
+      size_bytes: 0
+      fields: []
+
+    MultiZoneSetEffect:
+      pkt_type: 508
+      size_bytes: 59
+      fields:
+        - name: "Settings"
+          type: "<MultiZoneEffectSettings>"
+          size_bytes: 59
+
+    MultiZoneStateEffect:
+      pkt_type: 509
+      size_bytes: 59
+      fields:
+        - name: "Settings"
+          type: "<MultiZoneEffectSettings>"
+          size_bytes: 59
+
     MultiZoneExtendedSetColorZones:
       pkt_type: 510
       size_bytes: 664
@@ -766,4 +925,40 @@ packets:
         - name: "Colors"
           type: "[64]<LightHsbk>"
           size_bytes: 512
+
+    TileGetEffect:
+      pkt_type: 718
+      size_bytes: 2
+      fields:
+        - name: "Reserved0"
+          type: "uint8"
+          size_bytes: 1
+        - name: "Reserved1"
+          type: "uint8"
+          size_bytes: 1
+
+    TileSetEffect:
+      pkt_type: 719
+      size_bytes: 188
+      fields:
+        - name: "Reserved0"
+          type: "uint8"
+          size_bytes: 1
+        - name: "Reserved1"
+          type: "uint8"
+          size_bytes: 1
+        - name: "Settings"
+          type: "<TileEffectSettings>"
+          size_bytes: 186
+
+    TileStateEffect:
+      pkt_type: 720
+      size_bytes: 187
+      fields:
+        - name: "Reserved0"
+          type: "uint8"
+          size_bytes: 1
+        - name: "Settings"
+          type: "<TileEffectSettings>"
+          size_bytes: 186
 
