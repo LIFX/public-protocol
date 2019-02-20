@@ -88,6 +88,16 @@ enums:
       - name: "MULTI_ZONE_APPLICATION_REQUEST_APPLY_ONLY"
         value: 2
 
+  MultiZoneExtendedApplicationRequest:
+    type: uint8
+    values:
+      - name: "MULTI_ZONE_EXTENDED_APPLICATION_REQUEST_NO_APPLY"
+        value: 0
+      - name: "MULTI_ZONE_EXTENDED_APPLICATION_REQUEST_APPLY"
+        value: 1
+      - name: "MULTI_ZONE_EXTENDED_APPLICATION_REQUEST_APPLY_ONLY"
+        value: 2
+
 fields:
   LightHsbk:
     size_bytes: 8
@@ -630,6 +640,48 @@ packets:
         - name: "Color"
           type: "[8]<LightHsbk>"
           size_bytes: 64
+
+    MultiZoneExtendedSetColorZones:
+      pkt_type: 510
+      size_bytes: 664
+      fields:
+        - name: "Duration"
+          type: "uint32"
+          size_bytes: 4
+        - name: "Apply"
+          type: "<MultiZoneExtendedApplicationRequest>"
+          size_bytes: 1
+        - name: "Index"
+          type: "uint16"
+          size_bytes: 2
+        - name: "ColorsCount"
+          type: "uint8"
+          size_bytes: 1
+        - name: "Colors"
+          type: "[82]<LightHsbk>"
+          size_bytes: 656
+
+    MultiZoneExtendedGetColorZones:
+      pkt_type: 511
+      size_bytes: 0
+      fields: []
+
+    MultiZoneExtendedStateMultiZone:
+      pkt_type: 512
+      size_bytes: 661
+      fields:
+        - name: "Count"
+          type: "uint16"
+          size_bytes: 2
+        - name: "Index"
+          type: "uint16"
+          size_bytes: 2
+        - name: "ColorsCount"
+          type: "uint8"
+          size_bytes: 1
+        - name: "Colors"
+          type: "[82]<LightHsbk>"
+          size_bytes: 656
 
   tile:
     TileGetDeviceChain:
