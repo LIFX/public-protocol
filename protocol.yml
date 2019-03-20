@@ -365,9 +365,12 @@ packets:
           size_bytes: 8
         - type: reserved
           size_bytes: 8
-        - name: "Version"
-          type: "uint32"
-          size_bytes: 4
+        - name: "VersionMinor"
+          type: "uint16"
+          size_bytes: 2
+        - name: "VersionMajor"
+          type: "uint16"
+          size_bytes: 2
 
     DeviceGetWifiInfo:
       pkt_type: 16
@@ -404,9 +407,12 @@ packets:
           size_bytes: 8
         - type: reserved
           size_bytes: 8
-        - name: "Version"
-          type: "uint32"
-          size_bytes: 4
+        - name: "VersionMinor"
+          type: "uint16"
+          size_bytes: 2
+        - name: "VersionMajor"
+          type: "uint16"
+          size_bytes: 2
 
     DeviceGetPower:
       pkt_type: 20
@@ -775,7 +781,7 @@ packets:
         - name: "Index"
           type: "uint8"
           size_bytes: 1
-        - name: "Color"
+        - name: "Colors"
           type: "[8]<LightHsbk>"
           size_bytes: 64
 
@@ -858,7 +864,7 @@ packets:
         - name: "TileDevices"
           type: "[16]<TileStateDevice>"
           size_bytes: 880
-        - name: "TotalCount"
+        - name: "TileDevicesCount"
           type: "uint8"
           size_bytes: 1
 
@@ -878,7 +884,7 @@ packets:
           type: "float32"
           size_bytes: 4
 
-    TileGetState64:
+    TileGet64:
       pkt_type: 707
       size_bytes: 6
       fields:
@@ -906,7 +912,7 @@ packets:
           type: "[64]<LightHsbk>"
           size_bytes: 512
 
-    TileSetState64:
+    TileSet64:
       pkt_type: 715
       size_bytes: 522
       fields:
