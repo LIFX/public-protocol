@@ -8,6 +8,9 @@ More information can be found at https://lan.developer.lifx.com/
 Changelog
 ---------
 
+0.4 - TBD
+    * There is now a ``reserved`` type to indicate a reserved field
+
 0.3 - 20 Mar 2019
     Firmware versions now consist of separate minor/major properties and Tile messages have been renamed to reflect naming conventions.
 
