@@ -853,6 +853,37 @@ packets:
           type: "[82]<LightHsbk>"
           size_bytes: 656
 
+  relay:
+    RelayGetPower:
+      pkt_type: 816
+      size_bytes: 1
+      fields:
+        - name: "RelayIndex"
+          type: "uint8"
+          size_bytes: 1
+
+    RelaySetPower:
+      pkt_type: 817
+      size_bytes: 3
+      fields:
+        - name: "RelayIndex"
+          type: "uint8"
+          size_bytes: 1
+        - name: "Level"
+          type: "uint16"
+          size_bytes: 2
+
+    RelayStatePower:
+      pkt_type: 818
+      size_bytes: 3
+      fields:
+        - name: "RelayIndex"
+          type: "uint8"
+          size_bytes: 1
+        - name: "Level"
+          type: "uint16"
+          size_bytes: 2
+
   tile:
     TileGetDeviceChain:
       pkt_type: 701
