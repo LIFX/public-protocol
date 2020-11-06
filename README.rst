@@ -10,6 +10,8 @@ Changelog
 
 0.4 - TBD
     * There is now a ``reserved`` type to indicate a reserved field
+    * Added the ``StateUnhandled`` message
+      (see https://lan.developer.lifx.com/v2.0/docs/the-lifx-switch#section-light-messages)
 
 0.3 - 20 Mar 2019
     Firmware versions now consist of separate minor/major properties and Tile messages have been renamed to reflect naming conventions.

@@ -578,6 +578,14 @@ packets:
           type: "[64]byte"
           size_bytes: 64
 
+    DeviceStateUnhandled:
+      pkt_type: 223
+      size_bytes: 2
+      fields:
+        - name: "UnhandledType"
+          type: "uint16"
+          size_bytes: 2
+
   light:
     LightGet:
       pkt_type: 101
