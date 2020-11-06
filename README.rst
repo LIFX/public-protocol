@@ -8,7 +8,7 @@ More information can be found at https://lan.developer.lifx.com/
 Changelog
 ---------
 
-0.4 - TBD
+0.4 - 6 November 2020
     * There is now a ``reserved`` type to indicate a reserved field
     * Added the ``StateUnhandled`` message
       (see https://lan.developer.lifx.com/v2.0/docs/the-lifx-switch#section-light-messages)
