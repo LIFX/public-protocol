@@ -296,11 +296,9 @@ fields:
       - name: "Duration"
         type: "uint64"
         size_bytes: 8
-      - name: "Reserved0"
-        type: "uint32"
+      - type: reserved
         size_bytes: 4
-      - name: "Reserved1"
-        type: "uint32"
+      - type: reserved
         size_bytes: 4
       - name: "Parameter"
         type: "<TileEffectParameter>"
@@ -471,8 +469,7 @@ packets:
         - name: "Product"
           type: "uint32"
           size_bytes: 4
-        - name: "Version"
-          type: "uint32"
+        - type: reserved
           size_bytes: 4
 
     DeviceGetInfo:
@@ -580,6 +577,14 @@ packets:
         - name: "Payload"
           type: "[64]byte"
           size_bytes: 64
+
+    DeviceStateUnhandled:
+      pkt_type: 223
+      size_bytes: 2
+      fields:
+        - name: "UnhandledType"
+          type: "uint16"
+          size_bytes: 2
 
   light:
     LightGet:
@@ -848,6 +853,37 @@ packets:
           type: "[82]<LightHsbk>"
           size_bytes: 656
 
+  relay:
+    RelayGetPower:
+      pkt_type: 816
+      size_bytes: 1
+      fields:
+        - name: "RelayIndex"
+          type: "uint8"
+          size_bytes: 1
+
+    RelaySetPower:
+      pkt_type: 817
+      size_bytes: 3
+      fields:
+        - name: "RelayIndex"
+          type: "uint8"
+          size_bytes: 1
+        - name: "Level"
+          type: "uint16"
+          size_bytes: 2
+
+    RelayStatePower:
+      pkt_type: 818
+      size_bytes: 3
+      fields:
+        - name: "RelayIndex"
+          type: "uint8"
+          size_bytes: 1
+        - name: "Level"
+          type: "uint16"
+          size_bytes: 2
+
   tile:
     TileGetDeviceChain:
       pkt_type: 701
@@ -936,22 +972,18 @@ packets:
       pkt_type: 718
       size_bytes: 2
       fields:
-        - name: "Reserved0"
-          type: "uint8"
+        - type: reserved
           size_bytes: 1
-        - name: "Reserved1"
-          type: "uint8"
+        - type: reserved
           size_bytes: 1
 
     TileSetEffect:
       pkt_type: 719
       size_bytes: 188
       fields:
-        - name: "Reserved0"
-          type: "uint8"
+        - type: reserved
           size_bytes: 1
-        - name: "Reserved1"
-          type: "uint8"
+        - type: reserved
           size_bytes: 1
         - name: "Settings"
           type: "<TileEffectSettings>"
@@ -961,8 +993,7 @@ packets:
       pkt_type: 720
       size_bytes: 187
       fields:
-        - name: "Reserved0"
-          type: "uint8"
+        - type: reserved
           size_bytes: 1
         - name: "Settings"
           type: "<TileEffectSettings>"

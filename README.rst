@@ -8,6 +8,12 @@ More information can be found at https://lan.developer.lifx.com/
 Changelog
 ---------
 
+0.4 - 6 November 2020
+    * There is now a ``reserved`` type to indicate a reserved field
+    * Added the ``StateUnhandled`` message
+      (see https://lan.developer.lifx.com/v2.0/docs/the-lifx-switch#section-light-messages)
+    * Added messages for changing the power state of a relay on a switch
+
 0.3 - 20 Mar 2019
     Firmware versions now consist of separate minor/major properties and Tile messages have been renamed to reflect naming conventions.
 
