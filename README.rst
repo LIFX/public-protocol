@@ -8,6 +8,9 @@ More information can be found at https://lan.developer.lifx.com/
 Changelog
 ---------
 
+0.5 - 15 March 2021
+    * Added some HEV specific messages relevant to the LIFX Clean.
+
 0.4 - 6 November 2020
     * There is now a ``reserved`` type to indicate a reserved field
     * Added the ``StateUnhandled`` message

@@ -78,6 +78,24 @@ enums:
       - name: "LIGHT_WAVEFORM_PULSE"
         value: 4
 
+  LightLastHevCycleResult:
+    type: uint8
+    values:
+      - name: "LIGHT_LAST_HEV_CYCLE_RESULT_SUCCESS"
+        value: 0
+      - name: "LIGHT_LAST_HEV_CYCLE_RESULT_BUSY"
+        value: 1
+      - name: "LIGHT_LAST_HEV_CYCLE_RESULT_INTERRUPTED_BY_RESET"
+        value: 2
+      - name: "LIGHT_LAST_HEV_CYCLE_RESULT_INTERRUPTED_BY_HOMEKIT"
+        value: 3
+      - name: "LIGHT_LAST_HEV_CYCLE_RESULT_INTERRUPTED_BY_LAN"
+        value: 4
+      - name: "LIGHT_LAST_HEV_CYCLE_RESULT_INTERRUPTED_BY_CLOUD"
+        value: 5
+      - name: "LIGHT_LAST_HEV_CYCLE_RESULT_NONE"
+        value: 255
+
   MultiZoneApplicationRequest:
     type: uint8
     values:
@@ -729,6 +747,76 @@ packets:
         - name: "Brightness"
           type: "uint16"
           size_bytes: 2
+
+    LightGetHevCycle:
+      pkt_type: 142
+      size_bytes: 0
+      fields: []
+
+    LightSetHevCycle:
+      pkt_type: 143
+      size_bytes: 5
+      fields:
+        - name: "Enable"
+          type: "bool"
+          size_bytes: 1
+        - name: "DurationS"
+          type: "uint32"
+          size_bytes: 4
+
+    LightStateHevCycle:
+      pkt_type: 144
+      size_bytes: 9
+      fields:
+        - name: "DurationS"
+          type: "uint32"
+          size_bytes: 4
+        - name: "RemainingS"
+          type: "uint32"
+          size_bytes: 4
+        - name: "LastPower"
+          type: "bool"
+          size_bytes: 1
+
+    LightGetHevCycleConfiguration:
+      pkt_type: 145
+      size_bytes: 0
+      fields: []
+
+    LightSetHevCycleConfiguration:
+      pkt_type: 146
+      size_bytes: 5
+      fields:
+        - name: "Indication"
+          type: "bool"
+          size_bytes: 1
+        - name: "DurationS"
+          type: "uint32"
+          size_bytes: 4
+
+    LightStateHevCycleConfiguration:
+      pkt_type: 147
+      size_bytes: 5
+      fields:
+        - name: "Indication"
+          type: "bool"
+          size_bytes: 1
+        - name: "DurationS"
+          type: "uint32"
+          size_bytes: 4
+
+    LightGetLastHevCycleResult:
+      pkt_type: 148
+      size_bytes: 0
+      fields: []
+
+    LightStateLastHevCycleResult:
+      pkt_type: 149
+      size_bytes: 1
+      fields:
+        - name: "Result"
+          type: "<LightLastHevCycleResult>"
+          size_bytes: 1
 
   multi_zone:
     MultiZoneSetColorZones:
