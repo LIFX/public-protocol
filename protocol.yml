@@ -509,6 +509,11 @@ packets:
           type: "uint64"
           size_bytes: 8
 
+    DeviceSetReboot:
+      pkt_type: 38
+      size_bytes: 0
+      fields: []
+
     DeviceAcknowledgement:
       pkt_type: 45
       size_bytes: 0
