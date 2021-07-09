@@ -346,27 +346,6 @@ packets:
           type: "uint32"
           size_bytes: 4
 
-    DeviceGetHostInfo:
-      pkt_type: 12
-      size_bytes: 0
-      fields: []
-
-    DeviceStateHostInfo:
-      pkt_type: 13
-      size_bytes: 14
-      fields:
-        - name: "Signal"
-          type: "float32"
-          size_bytes: 4
-        - name: "Tx"
-          type: "uint32"
-          size_bytes: 4
-        - name: "Rx"
-          type: "uint32"
-          size_bytes: 4
-        - type: reserved
-          size_bytes: 2
-
     DeviceGetHostFirmware:
       pkt_type: 14
       size_bytes: 0
@@ -400,11 +379,9 @@ packets:
         - name: "Signal"
           type: "float32"
           size_bytes: 4
-        - name: "Tx"
-          type: "uint32"
+        - type: reserved
           size_bytes: 4
-        - name: "Rx"
-          type: "uint32"
+        - type: reserved
           size_bytes: 4
         - type: reserved
           size_bytes: 2
