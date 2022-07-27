@@ -50,6 +50,40 @@
 # in that place.
 
 enums:
+  ButtonGesture:
+    type: uint16
+    values:
+      - name: "BUTTON_GESTURE_PRESS"
+        value: 1
+      - name: "BUTTON_GESTURE_HOLD"
+        value: 2
+      - name: "BUTTON_GESTURE_PRESS_PRESS"
+        value: 3
+      - name: "BUTTON_GESTURE_PRESS_HOLD"
+        value: 4
+      - name: "BUTTON_GESTURE_HOLD_HOLD"
+        value: 5
+
+  ButtonTargetType:
+    type: uint16
+    values:
+      - name: reserved
+        value: 0
+      - name: reserved
+        value: 1
+      - name: "BUTTON_TARGET_TYPE_RELAYS"
+        value: 2
+      - name: "BUTTON_TARGET_TYPE_DEVICE"
+        value: 3
+      - name: "BUTTON_TARGET_TYPE_LOCATION"
+        value: 4
+      - name: "BUTTON_TARGET_TYPE_GROUP"
+        value: 5
+      - name: "BUTTON_TARGET_TYPE_SCENE"
+        value: 6
+      - name: "BUTTON_TARGET_TYPE_DEVICE_RELAYS"
+        value: 7
+
   DeviceService:
     type: uint8
     values:
@@ -143,6 +177,78 @@ enums:
         value: 4
 
 fields:
+  ButtonTargetRelays:
+    size_bytes: 16
+    fields:
+      - name: "RelaysCount"
+        type: "uint8"
+        size_bytes: 1
+      - name: "Relays"
+        type: "[15]uint8"
+        size_bytes: 15
+
+  ButtonTargetDevice:
+    size_bytes: 16
+    fields:
+      - name: "Serial"
+        type: "[6]byte"
+        size_bytes: 6
+      - name: "Reserved"
+        type: "[10]byte"
+        size_bytes: 10
+
+  ButtonTargetDeviceRelays:
+    size_bytes: 16
+    fields:
+      - name: "Serial"
+        type: "[6]byte"
+        size_bytes: 6
+      - name: "RelaysCount"
+        type: "uint8"
+        size_bytes: 1
+      - name: "Relays"
+        type: "[9]uint8"
+        size_bytes: 9
+
+  ButtonAction:
+    size_bytes: 20
+    fields:
+      - name: "Gesture"
+        type: "<ButtonGesture>"
+        size_bytes: 2
+      - name: "TargetType"
+        type: "<ButtonTargetType>"
+        size_bytes: 2
+      - name: "Target"
+        type: "<ButtonTarget>"
+        size_bytes: 16
+
+  Button:
+    size_bytes: 101
+    fields:
+      - name: "ActionsCount"
+        type: "uint8"
+        size_bytes: 1
+      - name: "Actions"
+        type: "[5]<ButtonAction>"
+        size_bytes: 100
+
+  ButtonBacklightHsbk:
+    size_bytes: 8
+    fields:
+      - name: "Hue"
+        type: "uint16"
+        size_bytes: 2
+      - name: "Saturation"
+        type: "uint16"
+        size_bytes: 2
+      - name: "Brightness"
+        type: "uint16"
+        size_bytes: 2
+      - name: "Kelvin"
+        type: "uint16"
+        size_bytes: 2
+
   LightHsbk:
     size_bytes: 8
     fields:
@@ -328,7 +434,111 @@ fields:
         type: "[16]<LightHsbk>"
         size_bytes: 128
 
+unions:
+  ButtonTarget:
+    comment: "Value for a target depends on the specified target type."
+    size_bytes: 16
+    fields:
+      - type: reserved
+        size_bytes: 16
+      - type: reserved
+        size_bytes: 16
+      - name: "Relays"
+        type: "<ButtonTargetRelays>"
+        size_bytes: 16
+        comment: ""
+      - name: "Device"
+        type: "<ButtonTargetDevice>"
+        size_bytes: 16
+        comment: ""
+      - name: "Location"
+        type: "[16]byte"
+        size_bytes: 16
+        comment: "Location ID"
+      - name: "Group"
+        type: "[16]byte"
+        size_bytes: 16
+        comment: "Group ID"
+      - name: "Scene"
+        type: "[16]byte"
+        size_bytes: 16
+        comment: "Scene ID"
+      - name: "DeviceRelays"
+        type: "<ButtonTargetDeviceRelays>"
+        size_bytes: 16
+        comment: "Relays on another device"
+
 packets:
+  button:
+    ButtonGet:
+      pkt_type: 905
+      size_bytes: 0
+      fields: []
+
+    ButtonSet:
+      pkt_type: 906
+      size_bytes: 810
+      fields:
+        - name: "Index"
+          type: "uint8"
+          size_bytes: 1
+        - name: "ButtonsCount"
+          type: "uint8"
+          size_bytes: 1
+        - name: "Buttons"
+          type: "[8]<Button>"
+          size_bytes: 808
+
+    ButtonState:
+      pkt_type: 907
+      size_bytes: 811
+      fields:
+        - name: "Count"
+          type: "uint8"
+          size_bytes: 1
+        - name: "Index"
+          type: "uint8"
+          size_bytes: 1
+        - name: "ButtonsCount"
+          type: "uint8"
+          size_bytes: 1
+        - name: "Buttons"
+          type: "[8]<Button>"
+          size_bytes: 808
+
+    ButtonGetConfig:
+      pkt_type: 909
+      size_bytes: 0
+      fields: []
+
+    ButtonStateConfig:
+      pkt_type: 911
+      size_bytes: 18
+      fields:
+        - name: "HapticDurationMs"
+          type: "uint16"
+          size_bytes: 2
+        - name: "BacklightOnColor"
+          type: "<ButtonBacklightHsbk>"
+          size_bytes: 8
+        - name: "BacklightOffColor"
+          type: "<ButtonBacklightHsbk>"
+          size_bytes: 8
+
+    ButtonSetConfig:
+      pkt_type: 910
+      size_bytes: 18
+      fields:
+        - name: "HapticDurationMs"
+          type: "uint16"
+          size_bytes: 2
+        - name: "BacklightOnColor"
+          type: "<ButtonBacklightHsbk>"
+          size_bytes: 8
+        - name: "BacklightOffColor"
+          type: "<ButtonBacklightHsbk>"
+          size_bytes: 8
+
   device:
     DeviceGetService:
       pkt_type: 2
@@ -1068,4 +1278,3 @@ packets:
         - name: "Settings"
           type: "<TileEffectSettings>"
           size_bytes: 186
-
