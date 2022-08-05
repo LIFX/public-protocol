@@ -8,6 +8,9 @@ More information can be found at https://lan.developer.lifx.com/
 Changelog
 ---------
 
+0.6 - 27 July 2022
+    * Added Button messages for configuring buttons on v3.90 firmware switches.
+
 0.5 - 15 March 2021
     * Added some HEV specific messages relevant to the LIFX Clean.
 
