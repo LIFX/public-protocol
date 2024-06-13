@@ -175,6 +175,8 @@ enums:
         value: 3
       - name: reserved
         value: 4
+      - name: "TILE_EFFECT_TYPE_SKY"
+        value: 5
 
 fields:
   ButtonTargetRelays:
@@ -338,7 +340,9 @@ fields:
         type: "<TileAccelMeas>"
         size_bytes: 6
       - type: reserved
-        size_bytes: 2
+        size_bytes: 1
+      - type: reserved
+        size_bytes: 1
       - name: "UserX"
         type: "float32"
         size_bytes: 4
@@ -1192,7 +1196,9 @@ packets:
           type: "uint8"
           size_bytes: 1
         - type: reserved
-          size_bytes: 2
+          size_bytes: 1
+        - type: reserved
+          size_bytes: 1
         - name: "UserX"
           type: "float32"
           size_bytes: 4
