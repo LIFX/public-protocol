@@ -8,6 +8,9 @@ More information can be found at https://lan.developer.lifx.com/
 Changelog
 ---------
 
+0.7 - 13 June 2024
+    * Added Sky to Tile firmware effects.
+
 0.6 - 27 July 2022
     * Added Button messages for configuring buttons on v3.90 firmware switches.
 
