@@ -162,6 +162,34 @@ enums:
       - name: "MULTI_ZONE_EXTENDED_APPLICATION_REQUEST_APPLY_ONLY"
         value: 2
 
+  TileEffectSkyPalette:
+    type: uint8
+    values:
+      - name: "TILE_EFFECT_SKY_PALETTE_CLOUDS_SKY"
+        value: 0
+      - name: "TILE_EFFECT_SKY_PALETTE_NIGHT_SKY"
+        value: 1
+      - name: "TILE_EFFECT_SKY_PALETTE_DAWN_SKY"
+        value: 2
+      - name: "TILE_EFFECT_SKY_PALETTE_DAWN_SUN"
+        value: 3
+      - name: "TILE_EFFECT_SKY_PALETTE_FULL_SUN"
+        value: 4
+      - name: "TILE_EFFECT_SKY_PALETTE_FINAL_SUN"
+        value: 5
+      - name: "TILE_EFFECT_SKY_PALETTE_NUM_COLOURS"
+        value: 6
+
+  TileEffectSkyType:
+    type: uint8
+    values:
+      - name: "TILE_EFFECT_SKY_TYPE_SUNRISE"
+        value: 0
+      - name: "TILE_EFFECT_SKY_TYPE_SUNSET"
+        value: 1
+      - name: "TILE_EFFECT_SKY_TYPE_CLOUDS"
+        value: 2
+
   TileEffectType:
     type: uint8
     values:
