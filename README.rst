@@ -8,7 +8,10 @@ More information can be found at https://lan.developer.lifx.com/
 Changelog
 ---------
 
-0.8 - 30 November 2025
+0.9 - 31 October 2025
+    * Defined duration field of ``TileCopyFrameBuffer`` message. 
+
+0.8 - 30 October 2025
     * Added ``TileCopyFrameBuffer`` message.
     * Added ``FbIndex`` field to ``TileBufferRect``
     * Added a number of new button target types.
