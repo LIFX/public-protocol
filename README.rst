@@ -8,6 +8,11 @@ More information can be found at https://lan.developer.lifx.com/
 Changelog
 ---------
 
+0.8 - 30 November 2025
+    * Added ``TileCopyFrameBuffer`` message.
+    * Added ``FbIndex`` field to ``TileBufferRect``
+    * Added a number of new button target types.
+
 0.7 - 13 June 2024
     * Added Sky to Tile firmware effects.
 
