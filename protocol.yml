@@ -1461,7 +1461,8 @@ packets:
         - name: "Height"
           type: "uint8"
           size_bytes: 1
-        - type: reserved
+        - name: "Duration"
+          type: "uint32"
           size_bytes: 4
         - type: reserved
           size_bytes: 1
