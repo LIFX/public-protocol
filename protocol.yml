@@ -63,6 +63,20 @@ enums:
         value: 4
       - name: "BUTTON_GESTURE_HOLD_HOLD"
         value: 5
+      - name: "BUTTON_GESTURE_PRESS_RELEASE"
+        value: 6
+      - name: "BUTTON_GESTURE_HOLD_RELEASE"
+        value: 7
+      - name: "BUTTON_GESTURE_PRESS_TOUCH"
+        value: 8
+      - name: "BUTTON_GESTURE_HOLD_TOUCH"
+        value: 9
+      - name: "BUTTON_GESTURE_PRESS_TOUCH_REPEAT"
+        value: 10
+      - name: "BUTTON_GESTURE_HOLD_TOUCH_REPEAT"
+        value: 11
+      - name: "BUTTON_GESTURE_PRESS_FAST_REPEAT"
+        value: 12
 
   ButtonTargetType:
     type: uint16
@@ -71,18 +85,64 @@ enums:
         value: 0
       - name: reserved
         value: 1
-      - name: "BUTTON_TARGET_TYPE_RELAYS"
+      - name: "BUTTON_TARGET_TYPE_POWER_TOGGLE_RELAYS"
         value: 2
-      - name: "BUTTON_TARGET_TYPE_DEVICE"
+      - name: "BUTTON_TARGET_TYPE_POWER_TOGGLE_DEVICE"
         value: 3
-      - name: "BUTTON_TARGET_TYPE_LOCATION"
+      - name: "BUTTON_TARGET_TYPE_POWER_TOGGLE_LOCATION"
         value: 4
-      - name: "BUTTON_TARGET_TYPE_GROUP"
+      - name: "BUTTON_TARGET_TYPE_POWER_TOGGLE_GROUP"
         value: 5
       - name: "BUTTON_TARGET_TYPE_SCENE"
         value: 6
-      - name: "BUTTON_TARGET_TYPE_DEVICE_RELAYS"
+      - name: "BUTTON_TARGET_TYPE_POWER_TOGGLE_DEVICE_RELAYS"
         value: 7
+      - name: "BUTTON_TARGET_TYPE_BRIGHTNESS_DOWN_DEVICE"
+        value: 8
+      - name: "BUTTON_TARGET_TYPE_BRIGHTNESS_DOWN_GROUP"
+        value: 9
+      - name: "BUTTON_TARGET_TYPE_BRIGHTNESS_DOWN_LOCATION"
+        value: 10
+      - name: "BUTTON_TARGET_TYPE_BRIGHTNESS_UP_DEVICE"
+        value: 11
+      - name: "BUTTON_TARGET_TYPE_BRIGHTNESS_UP_GROUP"
+        value: 12
+      - name: "BUTTON_TARGET_TYPE_BRIGHTNESS_UP_LOCATION"
+        value: 13
+      - name: "BUTTON_TARGET_TYPE_DEMO_EFFECT_CYCLE"
+        value: 14
+      - name: "BUTTON_TARGET_TYPE_DEMO_EFFECT_CYCLE_STOP"
+        value: 15
+      - name: "BUTTON_TARGET_TYPE_DEMO_SUNRISE_SUNSET"
+        value: 16
+      - name: "BUTTON_TARGET_TYPE_POWER_ON_DEVICE"
+        value: 17
+      - name: "BUTTON_TARGET_TYPE_POWER_ON_LOCATION"
+        value: 18
+      - name: "BUTTON_TARGET_TYPE_POWER_ON_GROUP"
+        value: 19
+      - name: "BUTTON_TARGET_TYPE_POWER_ON_RELAYS"
+        value: 20
+      - name: "BUTTON_TARGET_TYPE_POWER_OFF_DEVICE"
+        value: 21
+      - name: "BUTTON_TARGET_TYPE_POWER_OFF_LOCATION"
+        value: 22
+      - name: "BUTTON_TARGET_TYPE_POWER_OFF_GROUP"
+        value: 23
+      - name: "BUTTON_TARGET_TYPE_POWER_OFF_RELAYS"
+        value: 24
+      - name: reserved
+        value: 25
+      - name: reserved
+        value: 26
+      - name: reserved
+        value: 27
+      - name: "BUTTON_TARGET_TYPE_POWER_TOGGLE_LOCAL_DEVICE"
+        value: 28
+      - name: "BUTTON_TARGET_TYPE_BRIGHTNESS_DOWN_LOCAL_DEVICE"
+        value: 29
+      - name: "BUTTON_TARGET_TYPE_BRIGHTNESS_UP_LOCAL_DEVICE"
+        value: 30
 
   DeviceService:
     type: uint8
@@ -397,7 +457,8 @@ fields:
   TileBufferRect:
     size_bytes: 4
     fields:
-      - type: reserved
+      - name: "FbIndex"
+        type: "uint8"
         size_bytes: 1
       - name: "X"
         type: "uint8"
@@ -475,19 +536,19 @@ unions:
         size_bytes: 16
       - type: reserved
         size_bytes: 16
-      - name: "Relays"
+      - name: "PowerToggleRelays"
         type: "<ButtonTargetRelays>"
         size_bytes: 16
         comment: ""
-      - name: "Device"
+      - name: "PowerToggleDevice"
         type: "<ButtonTargetDevice>"
         size_bytes: 16
         comment: ""
-      - name: "Location"
+      - name: "PowerToggleLocation"
         type: "[16]byte"
         size_bytes: 16
         comment: "Location ID"
-      - name: "Group"
+      - name: "PowerToggleGroup"
         type: "[16]byte"
         size_bytes: 16
         comment: "Group ID"
@@ -495,10 +556,94 @@ unions:
         type: "[16]byte"
         size_bytes: 16
         comment: "Scene ID"
-      - name: "DeviceRelays"
+      - name: "PowerToggleDeviceRelays"
         type: "<ButtonTargetDeviceRelays>"
         size_bytes: 16
         comment: "Relays on another device"
+      - name: "BrightnessDownDevice"
+        type: "<ButtonTargetDevice>"
+        size_bytes: 16
+        comment: "Turn brightness down on device"
+      - name: "BrightnessDownGroup"
+        type: "[16]byte"
+        size_bytes: 16
+        comment: "Turn brightness down on group"
+      - name: "BrightnessDownLocation"
+        type: "[16]byte"
+        size_bytes: 16
+        comment: "Turn brightness down on location"
+      - name: "BrightnessUpDevice"
+        type: "<ButtonTargetDevice>"
+        size_bytes: 16
+        comment: "Turn brightness up on device"
+      - name: "BrightnessUpGroup"
+        type: "[16]byte"
+        size_bytes: 16
+        comment: "Turn brightness up on group"
+      - name: "BrightnessUpLocation"
+        type: "[16]byte"
+        size_bytes: 16
+        comment: "Turn brightness up on location"
+      - name: "DemoEffectCycle"
+        type: "[16]byte"
+        size_bytes: 16
+        comment: "Cycle through effects on local device."
+      - name: "DemoEffectCycleStop"
+        type: "[16]byte"
+        size_bytes: 16
+        comment: "Stop cycling through effects on local device."
+      - type: reserved
+        size_bytes: 16
+      - name: "PowerOnDevice"
+        type: "<ButtonTargetDevice>"
+        size_bytes: 16
+        comment: ""
+      - name: "PowerOnLocation"
+        type: "[16]byte"
+        size_bytes: 16
+        comment: "Location ID"
+      - name: "PowerOnGroup"
+        type: "[16]byte"
+        size_bytes: 16
+        comment: "Group ID"
+      - name: "PowerOnRelays"
+        type: "<ButtonTargetDeviceRelays>"
+        size_bytes: 16
+        comment: ""
+      - name: "PowerOffDevice"
+        type: "<ButtonTargetDevice>"
+        size_bytes: 16
+        comment: ""
+      - name: "PowerOffLocation"
+        type: "[16]byte"
+        size_bytes: 16
+        comment: "Location ID"
+      - name: "PowerOffGroup"
+        type: "[16]byte"
+        size_bytes: 16
+        comment: "Group ID"
+      - name: "PowerOffRelays"
+        type: "<ButtonTargetDeviceRelays>"
+        size_bytes: 16
+        comment: ""
+      - type: reserved
+        size_bytes: 16
+      - type: reserved
+        size_bytes: 16
+      - type: reserved
+        size_bytes: 16
+      - name: "PowerToggleLocalDevice"
+        type: "[16]byte"
+        size_bytes: 16
+        comment: ""
+      - name: "BrightnessDownLocalDevice"
+        type: "[16]byte"
+        size_bytes: 16
+        comment: ""
+      - name: "BrightnessUpLocalDevice"
+        type: "[16]byte"
+        size_bytes: 16
+        comment: ""
 
 packets:
   button:
@@ -1282,6 +1427,45 @@ packets:
           type: "[64]<LightHsbk>"
           size_bytes: 512
 
+    TileCopyFrameBuffer:
+      pkt_type: 716
+      size_bytes: 15
+      fields:
+        - name: "TileIndex"
+          type: "uint8"
+          size_bytes: 1
+        - name: "Length"
+          type: "uint8"
+          size_bytes: 1
+        - name: "SrcFbIndex"
+          type: "uint8"
+          size_bytes: 1
+        - name: "DstFbIndex"
+          type: "uint8"
+          size_bytes: 1
+        - name: "SrcX"
+          type: "uint8"
+          size_bytes: 1
+        - name: "SrcY"
+          type: "uint8"
+          size_bytes: 1
+        - name: "DstX"
+          type: "uint8"
+          size_bytes: 1
+        - name: "DstY"
+          type: "uint8"
+          size_bytes: 1
+        - name: "Width"
+          type: "uint8"
+          size_bytes: 1
+        - name: "Height"
+          type: "uint8"
+          size_bytes: 1
+        - type: reserved
+          size_bytes: 4
+        - type: reserved
+          size_bytes: 1
+
     TileGetEffect:
       pkt_type: 718
       size_bytes: 2
@@ -1312,3 +1496,4 @@ packets:
         - name: "Settings"
           type: "<TileEffectSettings>"
           size_bytes: 186
+
