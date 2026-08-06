@@ -143,6 +143,16 @@ enums:
         value: 29
       - name: "BUTTON_TARGET_TYPE_BRIGHTNESS_UP_LOCAL_DEVICE"
         value: 30
+      - name: "BUTTON_TARGET_TYPE_KELVIN_STEP_LOCAL_DEVICE"
+        value: 31
+      - name: reserved
+        value: 32
+      - name: reserved
+        value: 33
+      - name: reserved
+        value: 34
+      - name: reserved
+        value: 35
 
   DeviceService:
     type: uint8
@@ -265,6 +275,8 @@ enums:
         value: 4
       - name: "TILE_EFFECT_TYPE_SKY"
         value: 5
+      - name: "TILE_EFFECT_TYPE_COLOR_SWEEP"
+        value: 6
 
 fields:
   ButtonTargetRelays:
@@ -470,6 +482,22 @@ fields:
         type: "uint8"
         size_bytes: 1
 
+  TileEffectFillRectangle:
+    size_bytes: 4
+    fields:
+      - name: "X"
+        type: "uint8"
+        size_bytes: 1
+      - name: "Y"
+        type: "uint8"
+        size_bytes: 1
+      - name: "Width"
+        type: "uint8"
+        size_bytes: 1
+      - name: "Height"
+        type: "uint8"
+        size_bytes: 1
+
   TileEffectParameter:
     size_bytes: 32
     fields:
@@ -644,6 +672,18 @@ unions:
         type: "[16]byte"
         size_bytes: 16
         comment: ""
+      - name: "KelvinStepLocalDevice"
+        type: "<ButtonTargetKelvinStep>"
+        size_bytes: 16
+        comment: "Increment the kelvin value on the local device, loops around when\nmax_kelvin exceeded."
+      - type: reserved
+        size_bytes: 16
+      - type: reserved
+        size_bytes: 16
+      - type: reserved
+        size_bytes: 16
+      - type: reserved
+        size_bytes: 16
 
 packets:
   button:
@@ -1340,6 +1380,20 @@ packets:
         - name: "Level"
           type: "uint16"
           size_bytes: 2
+
+  sensor:
+    SensorGetAmbientLight:
+      pkt_type: 401
+      size_bytes: 0
+      fields: []
+
+    SensorStateAmbientLight:
+      pkt_type: 402
+      size_bytes: 4
+      fields:
+        - name: "Lux"
+          type: "float32"
+          size_bytes: 4
 
   tile:
     TileGetDeviceChain:
