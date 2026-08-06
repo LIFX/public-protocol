@@ -8,8 +8,14 @@ More information can be found at https://lan.developer.lifx.com/
 Changelog
 ---------
 
+0.10 - 6 August 2026
+    * Added ``TILE_EFFECT_TYPE_COLOR_SWEEP`` to effects
+    * Added ``BUTTON_TARGET_TYPE_KELVIN_STEP_LOCAL_DEVICE`` field to ButtonTargetType
+    * Added ``KelvinStepLocalDevice`` to ButtonTarget
+    * Added ``SensorGetAmbientLight`` and ``SensorStateAmbientLight`` messages
+
 0.9 - 31 October 2025
-    * Defined duration field of ``TileCopyFrameBuffer`` message. 
+    * Defined duration field of ``TileCopyFrameBuffer`` message.
 
 0.8 - 30 October 2025
     * Added ``TileCopyFrameBuffer`` message.
