@@ -312,6 +312,28 @@ fields:
         type: "[9]uint8"
         size_bytes: 9
 
+  ButtonTargetKelvinStep:
+    size_bytes: 16
+    fields:
+      - name: "Reserved1"
+        type: "[6]byte"
+        size_bytes: 6
+      - name: "MinKelvin"
+        type: "uint16"
+        size_bytes: 2
+      - name: "MaxKelvin"
+        type: "uint16"
+        size_bytes: 2
+      - name: "KelvinStep"
+        type: "uint16"
+        size_bytes: 2
+      - name: "Duration"
+        type: "uint16"
+        size_bytes: 2
+      - name: "Reserved2"
+        type: "[2]byte"
+        size_bytes: 2
+
   ButtonAction:
     size_bytes: 20
     fields:

@@ -8,6 +8,9 @@ More information can be found at https://lan.developer.lifx.com/
 Changelog
 ---------
 
+0.11 - 7 August 2026
+    * Added ``ButtonTargetKelvinStep`` type
+
 0.10 - 6 August 2026
     * Added ``TILE_EFFECT_TYPE_COLOR_SWEEP`` to effects
     * Added ``BUTTON_TARGET_TYPE_KELVIN_STEP_LOCAL_DEVICE`` field to ButtonTargetType
