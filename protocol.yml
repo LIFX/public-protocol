@@ -147,12 +147,6 @@ enums:
         value: 31
       - name: reserved
         value: 32
-      - name: reserved
-        value: 33
-      - name: reserved
-        value: 34
-      - name: reserved
-        value: 35
 
   DeviceService:
     type: uint8
@@ -231,6 +225,24 @@ enums:
         value: 1
       - name: "MULTI_ZONE_EXTENDED_APPLICATION_REQUEST_APPLY_ONLY"
         value: 2
+
+  ThreadRoutingRole:
+    type: uint8
+    values:
+      - name: "DEVICE_THREAD_ROLE_UNSPECIFIED"
+        value: 0
+      - name: "DEVICE_THREAD_ROLE_UNASSIGNED"
+        value: 1
+      - name: "DEVICE_THREAD_ROLE_SLEEPY"
+        value: 2
+      - name: "DEVICE_THREAD_ROLE_END"
+        value: 3
+      - name: "DEVICE_THREAD_ROLE_REED"
+        value: 4
+      - name: "DEVICE_THREAD_ROLE_ROUTER"
+        value: 5
+      - name: "DEVICE_THREAD_ROLE_LEADER"
+        value: 6
 
   TileEffectSkyPalette:
     type: uint8
@@ -441,6 +453,34 @@ fields:
       - name: "Parameter"
         type: "<MultiZoneEffectParameter>"
         size_bytes: 32
+
+  ThreadLinkHealth:
+    size_bytes: 8
+    fields:
+      - name: "Rloc16"
+        type: "uint16"
+        size_bytes: 2
+      - type: reserved
+        size_bits: 2
+      - name: "LinkQualityIn"
+        type: "uint8"
+        size_bits: 2
+      - name: "LinkQualityOut"
+        type: "uint8"
+        size_bits: 2
+      - type: reserved
+        size_bits: 2
+      - type: reserved
+        size_bytes: 1
+      - type: reserved
+        size_bytes: 1
+      - type: reserved
+        size_bytes: 1
+      - name: "LinkMarginDb"
+        type: "uint8"
+        size_bytes: 1
+      - type: reserved
+        size_bytes: 1
 
   TileAccelMeas:
     size_bytes: 6
@@ -698,12 +738,6 @@ unions:
         type: "<ButtonTargetKelvinStep>"
         size_bytes: 16
         comment: "Increment the kelvin value on the local device, loops around when\nmax_kelvin exceeded."
-      - type: reserved
-        size_bytes: 16
-      - type: reserved
-        size_bytes: 16
-      - type: reserved
-        size_bytes: 16
       - type: reserved
         size_bytes: 16
 
@@ -1416,6 +1450,37 @@ packets:
         - name: "Lux"
           type: "float32"
           size_bytes: 4
+
+  thread:
+    ThreadGetInfo:
+      pkt_type: 1200
+      size_bytes: 0
+      fields: []
+
+    ThreadStateInfo:
+      pkt_type: 1201
+      size_bytes: 32
+      fields:
+        - name: "Rloc16"
+          type: "uint16"
+          size_bytes: 2
+        - type: reserved
+          size_bytes: 2
+        - name: "NetworkName"
+          type: "[16]byte"
+          size_bytes: 16
+        - name: "Role"
+          type: "<ThreadRoutingRole>"
+          size_bytes: 1
+        - type: reserved
+          size_bytes: 1
+        - type: reserved
+          size_bytes: 1
+        - type: reserved
+          size_bytes: 1
+        - name: "LinkHealth"
+          type: "<ThreadLinkHealth>"
+          size_bytes: 8
 
   tile:
     TileGetDeviceChain:
