@@ -7,6 +7,8 @@ More information can be found at https://lan.developer.lifx.com/
 
 Changelog
 ---------
+0.12 - 9 September 2026
+    * Added ``ThreadGetInfo`` message.
 
 0.11 - 7 August 2026
     * Added ``ButtonTargetKelvinStep`` type
